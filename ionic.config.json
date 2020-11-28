@@ -1,0 +1,7 @@
+{
+  "name": "lolapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
