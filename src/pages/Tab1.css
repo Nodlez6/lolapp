@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'custom';
+    src: url('../assets/lol.ttf');
+}
+.text-custom{
+    font-family: "custom"; 
+}
+ion-content{
+    --background: #fff url('https://i.pinimg.com/originals/68/66/b6/6866b63caaf8c8e8f8419b8e13df2116.jpg') no-repeat center center / cover;
+}

@@ -1,49 +1,64 @@
 import React from 'react';
-import axios from 'axios';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+
+import { IonBackButton, IonButtons, IonContent, IonGrid, IonHeader, IonPage, IonRouterOutlet, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
+import {IonCard , IonCardHeader,IonButton, IonCardSubtitle, IonCardTitle , IonCardContent, IonCol} from '@ionic/react';
 
 /* Usando fetch */
 const Fetching = async () => {
   const ret = await fetch('http://localhost:25000/perfiles');
   const json = await ret.json();
-  console.log(json);
+  return json;
 }
 
 /* Usando Axios */
-const RequestToMyApi = () => {
-  return axios({
-    url: 'http://localhost:25000/perfiles',
-    method: 'get'
-  }).then(response => {
-    return response.data;
-  })
-};
+// const RequestToMyApi = () => {
+//   return axios({
+//     url: 'http://localhost:25000/perfiles',
+//     method: 'get'
+//   }).then(response => {
+//     return response.data;
+//   })
+// };
 
 const Tab1: React.FC = () => {
 
-  const [players, setPlayers] = React.useState([]);
   
-  React.useEffect(() => {
-    RequestToMyApi().then(data => setPlayers(data));
-  }, []);
+  
+  // React.useEffect(() => {
+  //   RequestToMyApi().then(data => setPlayers(data))
+  // }, []);
 
    return (
-    <IonPage>
+    <IonPage >
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 1</IonTitle>
+          
+          <IonTitle className='text-custom'>League of Legends</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 1</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Tab 1 page" />
+      <IonContent className='fondo' >
+
+        <IonGrid>
+          <IonRow>
+            <IonCol>
+              <IonButton routerLink='/tab2'  expand="block">Perfiles</IonButton>
+            </IonCol>
+            <IonCol>
+            <IonButton routerLink='/tab3' expand="block">Partidas</IonButton>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol>
+            <IonButton color='warning' routerLink='/Consultas' expand="block">Consultas</IonButton>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+    
+  
       </IonContent>
+
     </IonPage>
   );
 };
