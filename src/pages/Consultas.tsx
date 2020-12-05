@@ -2,22 +2,31 @@ import React, { Fragment, useState } from 'react'
 import { IonPage, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonButton } from '@ionic/react';
 import axios from 'axios';
 
-const RequestToMyApi = () => {
-    return axios({
-      url: 'http://localhost:25000/partidas',
-      method: 'get'
-    }).then(response => {
-      return response.data;
-    })
-  };
 
 export const Consultas = () => {
-    
+  const promedioPartida = () => {
+    return axios({
+      url: 'http://localhost:25000/avgp_dates',
+       method: 'post',
+       headers: {}, 
+      data: {
+        'date1': fecha1,
+        'date2': fecha2,
+    }
+     }).then(response => {
+       return response.data;
+     })
+   };
 
-    const [partidas, setPartidas] = useState([]);
+
+    
+    
+    //Promedio duracion partida
+    const [fecha1, setFecha1] = useState('')
+    const [fecha2, setFecha2] = useState('')
 
     const Consult = () => {
-        console.log(partidas);
+        
         return(
             <Fragment>
                 
@@ -25,7 +34,7 @@ export const Consultas = () => {
         )
     }
     React.useEffect(() => {
-        RequestToMyApi().then(data => setPartidas(data));
+        
         
     }, []);
 
@@ -39,7 +48,7 @@ export const Consultas = () => {
             <IonButtons slot="start">
               <IonBackButton defaultHref='/' text='regresar' />
             </IonButtons>
-          <IonTitle>Tab 3</IonTitle>
+          <IonTitle>Consultas</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

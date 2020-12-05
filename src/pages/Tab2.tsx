@@ -13,9 +13,30 @@ const RequestToMyApi = () => {
   })
 };
 
+
+
+
+
 const Tab2: React.FC = () => {
 
-  const [players, setPlayers] = useState([{}]);
+  const CrearPerfiles = () => {
+    return axios({
+      url: 'http://localhost:25000/crear_perfil',
+      method: 'post',
+      headers: {}, 
+      data: {
+        'id_perfil': players.length,
+         'tipo': tipo ,
+         'servidor': server ,
+         'division': div ,
+         'nombre': nombre 
+    }
+    }).then(response => {
+      return response.data;
+    })
+  };
+
+  const [players, setPlayers] = useState([] as any);
   const [showPopover, setShowPopover] = useState(false);
   const [tipo, setTipo] = useState('');
   const [server, setServer] = useState('');
@@ -28,6 +49,19 @@ const Tab2: React.FC = () => {
  
 
   const Agregar= () => {
+    if(tipo == '' || server =='' || div == "" || nombre == ""){
+      setShowPopover(false);
+      setTipo('');
+      setServer('');
+      setNombre('');
+      setDiv('');
+      return;
+    }
+  
+    setTipo('');
+    setServer('');
+    setNombre('');
+    setDiv('');
     const obj = { 
        'id_perfil': players.length,
        'tipo': tipo ,
@@ -35,10 +69,11 @@ const Tab2: React.FC = () => {
        'division': div ,
        'nombre': nombre 
     };
-    
-  
-    
+
+    const a = [ ...players, obj];
+    setPlayers(a);
     setShowPopover(false);
+    CrearPerfiles();
   }
 
  
@@ -52,32 +87,46 @@ const Tab2: React.FC = () => {
             <IonButtons slot="start">
               <IonBackButton defaultHref='/' text='regresar' />
             </IonButtons>
-          <IonTitle>Tab 2</IonTitle>
+          <IonTitle>Perfiles</IonTitle>
         </IonToolbar>
       </IonHeader>
+      
       <IonContent className='ion-padding' fullscreen>
-       {players.map((player, i) => console.log())}
+       {players.map((player: any, i: any) => (
+         <IonCard key={i}>
+           <IonImg className='img-perfil' src={'/assets/images/'+player['division']+'.png'}/>
+         <IonCardHeader>
+         <IonCardSubtitle className='center'>{player['tipo']+' , '+player['servidor']}</IonCardSubtitle>
+         <IonCardTitle className='center'>{player['nombre']}</IonCardTitle>
+         </IonCardHeader>
+
+         <IonCardContent className='center'>
+          {player['division']}
+        </IonCardContent>
+       </IonCard>
+       ))}
          <IonPopover
         isOpen={showPopover}
-        cssClass='my-custom-class'
+        cssClass='my-custom-class ion-padding'
         onDidDismiss={e => setShowPopover(false)}
+      
       >
         
         <IonItem >
-            <IonInput  value={tipo} placeholder="Enter Input" onIonChange={e => setTipo(e.detail.value!)}></IonInput>
+            <IonInput  value={tipo} placeholder="Tipo de perfil" onIonChange={e => setTipo(e.detail.value!)}></IonInput>
         </IonItem>
         <IonItem >
-            <IonInput  value={server} placeholder="Enter Input" onIonChange={e => setServer(e.detail.value!)}></IonInput>
+            <IonInput  value={server} placeholder="Servidor" onIonChange={e => setServer(e.detail.value!)}></IonInput>
         </IonItem>
         <IonItem >
-            <IonInput  value={nombre} placeholder="Enter Input" onIonChange={e => setNombre(e.detail.value!)}></IonInput>
+            <IonInput  value={nombre} placeholder="Nombre" onIonChange={e => setNombre(e.detail.value!)}></IonInput>
         </IonItem>
         <IonItem >
-            <IonInput  value={div} placeholder="Enter Input" onIonChange={e => setDiv(e.detail.value!)}></IonInput>
+            <IonInput  value={div} placeholder="Division" onIonChange={e => setDiv(e.detail.value!)}></IonInput>
         </IonItem>
 
-        <IonButton onClick={Agregar}>Agregar</IonButton>
-        
+        <IonButton className='ion-margin'  onClick={Agregar}>Agregar</IonButton>
+         
       </IonPopover>
       <IonButton expand='block' onClick={() => setShowPopover(true)}>Agregar perfil</IonButton>
       

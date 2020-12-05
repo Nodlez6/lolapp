@@ -34,6 +34,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import { Consultas } from './pages/Consultas';
+import { Campeones } from './pages/Campeones';
 
 
 const App: React.FC = () => (
@@ -44,6 +45,7 @@ const App: React.FC = () => (
           <Route path="/tab2" component={Tab2} exact={true} />
           <Route path="/tab3" component={Tab3} />
           <Route path="/Consultas" component={Consultas} exact={true} />
+          <Route path="/Campeones" component={Campeones} exact={true} />
           <Route path="/" render={() => <Redirect to="/tab1" />} exact={true} />
         </IonRouterOutlet>
     </IonReactRouter>

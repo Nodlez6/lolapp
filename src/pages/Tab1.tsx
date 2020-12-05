@@ -49,6 +49,13 @@ const Tab1: React.FC = () => {
             <IonButton routerLink='/tab3' expand="block">Partidas</IonButton>
             </IonCol>
           </IonRow>
+
+          <IonRow>
+          <IonCol>
+            <IonButton color='danger' routerLink='/Campeones' expand="block">Campeones</IonButton>
+            </IonCol>
+          </IonRow>
+
           <IonRow>
             <IonCol>
             <IonButton color='warning' routerLink='/Consultas' expand="block">Consultas</IonButton>
