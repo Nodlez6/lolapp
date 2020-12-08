@@ -1,0 +1,8 @@
+.text-custom{
+    font-family: "custom"; 
+}
+ion-avatar{
+    margin: 10px auto;
+    width: 200px;
+    height: 200px;
+}

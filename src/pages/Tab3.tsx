@@ -13,6 +13,7 @@ import {
   IonCardSubtitle,
   IonCardTitle,
   IonCardContent,
+  IonAvatar,
 } from "@ionic/react";
 
 import "./Tab3.css";
@@ -94,13 +95,14 @@ const Tab3: React.FC = () => {
   const[campeon, setCampeon] = useState('');
   
   const Agregar = () => {
-    if(duracion == '' || fechayhora == '' || winorlose == ""){
+    if(duracion == '' || winorlose == "" || perfil == '' || campeon ==''){
       setShowPopover(false);
       setDuracion('');
       setFechayhora('');
       setWinorlose('');
       setPerfil('');
       setCampeon('');
+      
       return;
     }
     setDuracion('');
@@ -109,28 +111,50 @@ const Tab3: React.FC = () => {
     setPerfil('');
     setCampeon('');
     findPerfilandCampeon(perfil,campeon);
+    const fecha = new Date();
+    setFechayhora((fecha.getFullYear()+'-'+fecha.getMonth()+'-0'+fecha.getDate()).toString())
     const obj = {
       "duracion": duracion,
       "id_campeon": parseInt(Campeon),
       "id_partida": partidas.length + 1,
       "id_perfil": parseInt(Perfil),
-      'fechayhora':fechayhora,
+      'dateformat':fechayhora,
       "winorlose": winorlose,
     };
     const a = [...partidas, obj];
     setPartida(a);
-   
-    
-
+  
     CrearPartida();
     setShowPopover(false);
   }
+  
+
 
   React.useEffect(() => {
     getPartidas().then((data) => setPartida(data));
     getPerfiles().then(data => setPerfiles(data));
-    getCampeones().then(data => console.log(data));
+    getCampeones().then(data => setCampeones(data));
   }, []);
+
+  const sacarCampeon = (id: any) => {
+    let camp: any;
+    campeones.map(campeon => {
+      if(campeon['id_campeon'] == id){
+         camp = campeon['nombre'];
+      }
+    })
+    return camp;
+  }
+
+  const sacarPerfil = (id:any) => {
+    let perf: any;
+    perfiles.map(perfil => {
+      if(perfil['id_perfil'] == id){
+        perf = perfil['nombre'];
+      }
+    })
+    return perf;
+  }
 
   return (
     <IonPage>
@@ -139,7 +163,7 @@ const Tab3: React.FC = () => {
           <IonButtons slot="start">
             <IonBackButton defaultHref="/" text="regresar" />
           </IonButtons>
-          <IonTitle>Partidas</IonTitle>
+          <IonTitle className='text-custom'>Partidas</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className='ion-padding' fullscreen>
@@ -155,7 +179,14 @@ const Tab3: React.FC = () => {
           </IonCardTitle>
 
           <IonCardContent className='ion-text-center'>
-            {partida['fechayhora']}
+          <IonAvatar>
+              <img  src={'/assets/Campeones/'+sacarCampeon(partida['id_campeon'])+'_1.jpg' } />
+          </IonAvatar>
+            {sacarCampeon(partida['id_campeon'])}
+            <br/>
+            {sacarPerfil(partida['id_perfil'])}
+            <br/>
+            {partida['dateformat']}
           </IonCardContent>
         </IonCard>
         ))}
@@ -170,9 +201,7 @@ const Tab3: React.FC = () => {
         <IonItem >
             <IonInput  value={duracion} placeholder="Duración de partida" onIonChange={e => setDuracion(e.detail.value!)}></IonInput>
         </IonItem>
-        <IonItem >
-            <IonInput  value={fechayhora} placeholder="AAAA-MM-DD" onIonChange={e => setFechayhora(e.detail.value!)}></IonInput>
-        </IonItem>
+        
         <IonItem >
             <IonInput  value={winorlose} placeholder="win or lose" onIonChange={e => setWinorlose(e.detail.value!)}></IonInput>
         </IonItem>

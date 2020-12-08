@@ -87,7 +87,7 @@ const Tab2: React.FC = () => {
             <IonButtons slot="start">
               <IonBackButton defaultHref='/' text='regresar' />
             </IonButtons>
-          <IonTitle>Perfiles</IonTitle>
+          <IonTitle className='text-custom'>Perfiles</IonTitle>
         </IonToolbar>
       </IonHeader>
       

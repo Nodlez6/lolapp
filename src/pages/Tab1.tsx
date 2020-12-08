@@ -35,7 +35,7 @@ const Tab1: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           
-          <IonTitle className='text-custom'>League of Legends</IonTitle>
+          <IonTitle className='ion-text-center text-custom'>League of Legends</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className='fondo' >
